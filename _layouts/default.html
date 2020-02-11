@@ -3,6 +3,9 @@
 {% include head.html %}
 <body>
 	{% include header.html %}
+	{% if page.use_math %}
+		{% include mathjax_support.html %}
+	{% endif %}
 	<div class="container">
 
 	{% if page.id %}
