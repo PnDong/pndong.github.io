@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en">
+{% if page.use_math %}
+	{% include mathjax.html %}
+{% endif %}
 {% include head.html %}
 <body>
 	{% include header.html %}
-	{% if page.use_math %}
-		{% include mathjax.html %}
-	{% endif %}
 	<div class="container">
 
 	{% if page.id %}
