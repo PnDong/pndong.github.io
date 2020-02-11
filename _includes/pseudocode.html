@@ -1,7 +1,7 @@
-<pre id="read-{{ include.id }}" style="display:none; color:black">
+<pre id="read-{{ include.id }}" style="display:none;">
     {{ include.code }}
 </pre>
-<div id="goal-{{ include.id }}"></div>
+<div id="goal-{{ include.id }}" style="color:black;"></div>
 <script type="text/javascript">
     var code = document.getElementById("read-{{ include.id }}").textContent;
     var parentEl = document.getElementById("goal-{{ include.id }}");
