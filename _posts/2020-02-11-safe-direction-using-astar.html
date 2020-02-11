@@ -1,0 +1,72 @@
+---
+layout: default
+title: "[SW개발보안경진대회] A* 알고리즘을 이용한 안전길찾기 서비스"
+date: 2020-02-11 05:00:00 +9
+published: 2020-02-11 04:00:00 +9
+comments: true
+categories: development
+tags: [a*, astar, shortest-path, algorithm, secure-coding, pedestrian-safety]
+github: "https://github.com/PnDong/SafeDirection"
+use_math: true
+---
+
+<p>
+    현재는 다양한 길찾기 서비스가 있다. 하지만 이런 길찾기 서비스를 이용하는 사용자들은 가는 길에 어떤 위험요소가 있는지 확인하기 힘들고, 확인하더라도 대체 경로를 찾는 것이 쉽지 않다.
+	공사중인 건물 붕괴 사고, 길거리 범죄, 차량 사고 등 많은 일들이 우리가 평소에 거니는 도로에서 일어난다.
+	우리가 SW개발보안경진대회 해커톤에서 개발한 '안전길찾기'의 프로토타입은 이런 위험 요소들을 미리 확인하고,
+	A* Search 알고리즘에 관한 정리를 이용해 완전하면서 안정적으로 최단 대체 경로, 즉 '안전한 길'을 찾는 방법을 제안한다.
+</p>
+<!--more-->
+
+<h2>Introduction</h2>
+
+<p>
+	현재는 다양한 길찾기 서비스가 있다. 구글, 네이버 등 다양한 기업들이 출발지와 목적지를 입력하면 최단경로를 찾아주는 서비스를 운영하고 있다.
+	한편, 공사중인 건물 붕괴 사고, 길거리 범죄, 차량 사고 등 많은 일들이 우리가 평소에 거니는 도로에서 일어난다. 하지만 이런 길찾기 서비스는 최단 경로를 찾는 것에 관심이 있고, '안전한' 경로를 찾는 것에는 큰 관심이 없다.
+	따라서 기존의 길찾기 서비스를 이용하는 사용자들은 가는 길에 어떤 위험요소가 있는지 확인하기 힘들고, 알고 있더라도 다양하고 많은 위험요소를 고려해 대체 경로를 찾는 것이 쉽지 않다.
+	우리가 SW개발보안경진대회 해커톤에서 개발한 '안전길찾기'의 프로토타입은 이런 위험 요소들을 미리 확인하고,
+	A* Search 알고리즘에 관한 정리를 이용해 완전하면서 안정적으로 최단 대체 경로, 즉 '안전한 길'을 제안한다. 이 글에서는 이론적인 배경부터 어떤 API와 클라우드 서비스를 활용해서 개발했는지를 다룰 것이다.
+	Foundations of SafeDirection 부분에서는 그래프로 표현된 지도에서,
+	유클리드 거리 외에 다양한 안전 속성을 가지고 있는 간선에 대해 A* Search 알고리즘이 안전을 고려한 최단 경로를 찾는 데 어떻게 완결성(Completeness)과 최적성(Admissibility)을 가지는지 그 이론적 배경을 다룬다.
+	Implementation of SafeDirection 부분에서는 우리가 개발한 안전길찾기의 프로토타입이 어떤 API와 클라우드 서비스를 활용해서 어떻게 구현됐는지에 대해 다룬다.
+</p>
+
+<h2>Foundations of SafeDirection</h2>
+
+<p>
+	A* Search 알고리즘은 다익스트라(Dijkstra) 알고리즘과 매우 유사하지만, 휴리스틱(Heuristics)을 사용한다는 점에서 차이가 있다.
+	먼저 다익스트라 알고리즘을 알아보자.
+	$$
+	\usepackage{algorithm}
+	\usepackage{algorithmic}
+	\begin{algorithm}
+	\caption{Calculate $y = x^n$}
+	\begin{algorithmic}
+	\REQUIRE $n \geq 0 \vee x \neq 0$
+	\ENSURE $y = x^n$
+	\STATE $y \leftarrow 1$
+	\IF{$n < 0$}
+	\STATE $X \leftarrow 1 / x$
+	\STATE $N \leftarrow -n$
+	\ELSE
+	\STATE $X \leftarrow x$
+	\STATE $N \leftarrow n$
+	\ENDIF
+	\WHILE{$N \neq 0$}
+	\IF{$N$ is even}
+	\STATE $X \leftarrow X \times X$
+	\STATE $N \leftarrow N / 2$
+	\ELSE[$N$ is odd]
+	\STATE $y \leftarrow y \times X$
+	\STATE $N \leftarrow N - 1$
+	\ENDIF
+	\ENDWHILE
+	\end{algorithmic}
+	\end{algorithm}
+	$$
+</p>
+
+<h2>Implementation of SafeDirection</h2>
+
+
+<h2>Conclusion</h2>
