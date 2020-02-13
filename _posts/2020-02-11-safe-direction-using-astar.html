@@ -52,6 +52,18 @@ use_math: true
 <p>
 	A* Search 알고리즘은 다익스트라(Dijkstra) 알고리즘과 매우 유사하지만, 경로 비용 대신에 휴리스틱(heuristics)을 사용해 탐색 공간을 줄인다는 점에서 다익스트라 알고리즘과 차이가 있다.<br>
 
+{% include pseudocode.html id="2" code="
+\begin{algorithm}
+\caption{Dijkstra's Algorithm}
+\begin{algorithmic}
+\PROCEDURE{Dijkstra}{$Graph, startNode, endNode$}
+	\WHILE{$not Frontier.isEmpty()$}
+    \ENDWHILE
+\ENDPROCEDURE
+\end{algorithmic}
+\end{algorithm}
+" %}
+
 {% include pseudocode.html id="1" code="
 \begin{algorithm}
 \caption{Dijkstra's Algorithm}
