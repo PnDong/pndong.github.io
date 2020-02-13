@@ -66,17 +66,16 @@ use_math: true
 	\WHILE{$not Frontier.isEmpty()$}
         \STATE $v$ \gets $Frontier.extract-min()$
 		\IF{$v = endNode$}
-			\STATE return $construct-path(endNode)$
+			\RETURN $construct-path(endNode)$
 		\ENDIF
 		\STATE add $v$ to $Explored$
         \FOR{\forall $u$ \in $N(v)$}
 			\STATE $alt \gets Cost[v]+W[u,v]$
 			\IF{$u$ \notin $Frontier$ and $u$ \notin $Explored$}
 				STATE $Frontier.add(u)$ with priority $alt$
-			\ENDIF
-			\ELSEIF{$u$ \in $Frontier$ \nand $Cost[u]>alt$}
+			\ELIF{$u$ \in $Frontier$ \nand $Cost[u]>alt$}
 				$Frontier.update-priority(u, alt)$
-			\ENDELSEIF
+			\ENDIF
 		\ENDFOR
     \ENDWHILE
 	\STATE $failed$ to find the shortest path
