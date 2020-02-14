@@ -9,10 +9,8 @@ google-ID: ''
 menu: 
   - name: Featured Projects
     submenu:
-      - name: MicroBam
-        link: /projects/microbam
-      - name: OurLegacy
-        link: /projects/ourlegacy
+      - name: Coming soon
+        link: /projects/Coming soon
   - name: Posts
     link: /
   - name: Tags

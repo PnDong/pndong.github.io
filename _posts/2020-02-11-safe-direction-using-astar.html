@@ -94,6 +94,8 @@ use_math: true
 	\STATE create a vertex set $Explored$
 	\STATE $Cost[startNode] \gets 0$
 	\STATE $Frontier.add(startNode)$ with priority $Cost[startNode]$
+	\WHILE{$\neg Frontier.isEmpty()$}
+	\ENDWHILE
 	\STATE $failed$ to find the shortest path
 \ENDPROCEDURE
 \end{algorithmic}
