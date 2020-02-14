@@ -71,9 +71,9 @@ use_math: true
 		\STATE add $v$ to $Explored$
         \FOR{$\forall u \in N(v)$}
 			\STATE $alt \gets Cost[v]+W[u,v]$
-			\IF{$u \notin Frontier \nand u \notin Explored$}
+			\IF{$u \notin Frontier \land u \notin Explored$}
 				STATE $Frontier.add(u)$ with priority $alt$
-			\ELIF{$u \in Frontier \nand Cost[u]>alt$}
+			\ELIF{$u \in Frontier \land Cost[u]>alt$}
 				$Frontier.update-priority(u, alt)$
 			\ENDIF
 		\ENDFOR
