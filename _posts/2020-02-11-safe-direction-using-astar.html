@@ -87,17 +87,17 @@ use_math: true
 \begin{algorithm}
 \caption{Dijkstra's Algorithm}
 \begin{algorithmic}
-\PROCEDURE{Dijkstra}{$Graph, startNode, endNode$}
+\PROCEDURE{Dijkstra}{$G, s, e$}
 	\STATE initialize $Cost[v], \forall v \in G(V)$
 	\STATE initialize $Predecessor[v], \forall v \in G(V)$
 	\STATE create a vertex priority queue $Frontier$
 	\STATE create a vertex set $Explored$
-	\STATE $Cost[startNode] \gets 0$
-	\STATE $Frontier.add(startNode)$ with priority $Cost[startNode]$
-	\WHILE{$\neg Frontier.isEmpty()$}
-        \STATE $v \gets Frontier.extract-min()$
-		\IF{$v = endNode$}
-			\RETURN $construct-path(endNode)$
+	\STATE $Cost[s] \gets 0$
+	\STATE $Frontier.add(s)$ with priority $Cost[s]$
+	\WHILE{$\neg Frontier.is$-$empty()$}
+        \STATE $v \gets Frontier.extract$-$min()$
+		\IF{$v = e$}
+			\RETURN $construct$-$path(e)$
 		\ENDIF
 	\ENDWHILE
 	\STATE $failed$ to find the shortest path
