@@ -4,12 +4,11 @@
 <div id="goal-{{ include.id }}" style="color:black;"></div>
 <script type="text/javascript">
 	$(window).on('load', function() {
-		// your code here
-    var code = document.getElementById("read-{{ include.id }}").textContent;
-    var parentEl = document.getElementById("goal-{{ include.id }}");
-    var options = {
-        lineNumber: false
-    };
-    pseudocode.render(code, parentEl, options);
+		var code = document.getElementById("read-{{ include.id }}").textContent;
+		var parentEl = document.getElementById("goal-{{ include.id }}");
+		var options = {
+			lineNumber: false
+		};
+		pseudocode.render(code, parentEl, options);
 	});
 </script>
