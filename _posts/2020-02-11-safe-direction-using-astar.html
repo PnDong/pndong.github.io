@@ -57,23 +57,23 @@ use_math: true
 \caption{Dijkstra's Algorithm}
 \begin{algorithmic}
 \PROCEDURE{Dijkstra}{$Graph, startNode, endNode$}
-	\STATE initialize $Cost[v]$ for all $v$ \in $G(V)$
-	\STATE initialize $Predecessor[v]$ for all $v$ \in $G(V)$
+	\STATE initialize $Cost[v], \forall v \in G(V)$
+	\STATE initialize $Predecessor[v], \forall v \in G(V)$
 	\STATE create a vertex priority queue $Frontier$
 	\STATE create a vertex set $Explored$
-	\STATE $Cost[startNode]$ \gets $0$
+	\STATE $Cost[startNode] \gets 0$
 	\STATE $Frontier.add(startNode)$ with priority $Cost[startNode]$
-	\WHILE{$not Frontier.isEmpty()$}
-        \STATE $v$ \gets $Frontier.extract-min()$
+	\WHILE{$\neg Frontier.isEmpty()$}
+        \STATE $v \gets Frontier.extract-min()$
 		\IF{$v = endNode$}
 			\RETURN $construct-path(endNode)$
 		\ENDIF
 		\STATE add $v$ to $Explored$
-        \FOR{\forall $u$ \in $N(v)$}
+        \FOR{$\forall u \in N(v)$}
 			\STATE $alt \gets Cost[v]+W[u,v]$
-			\IF{$u$ \notin $Frontier$ and $u$ \notin $Explored$}
+			\IF{$u \notin Frontier \nand u \notin Explored$}
 				STATE $Frontier.add(u)$ with priority $alt$
-			\ELIF{$u$ \in $Frontier$ \nand $Cost[u]>alt$}
+			\ELIF{$u \in Frontier \nand Cost[u]>alt$}
 				$Frontier.update-priority(u, alt)$
 			\ENDIF
 		\ENDFOR
@@ -101,7 +101,7 @@ use_math: true
 <h3>그래프 XML 표현</h3>
 
 <p>
-	안전길찾기 프로토타입에 사용되는 지도 데이터는 map_data.xml로 저장했으며, 구조는 대략 다음과 같다.
+	안전길찾기 프로토타입에 사용되는 더미 지도 데이터는 map_data.xml로 저장했으며, 구조는 대략 다음과 같다.
 </p>
 
 {% highlight java %}
