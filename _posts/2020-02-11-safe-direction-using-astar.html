@@ -95,6 +95,10 @@ use_math: true
 	\STATE $Cost[startNode] \gets 0$
 	\STATE $Frontier.add(startNode)$ with priority $Cost[startNode]$
 	\WHILE{$\neg Frontier.isEmpty()$}
+        \STATE $v \gets Frontier.extract-min()$
+		\IF{$v = endNode$}
+			\RETURN $construct-path(endNode)$
+		\ENDIF
 	\ENDWHILE
 	\STATE $failed$ to find the shortest path
 \ENDPROCEDURE
