@@ -89,6 +89,11 @@ use_math: true
 \begin{algorithmic}
 \PROCEDURE{Dijkstra}{$Graph, startNode, endNode$}
 	\STATE initialize $Cost[v], \forall v \in G(V)$
+	\STATE initialize $Predecessor[v], \forall v \in G(V)$
+	\STATE create a vertex priority queue $Frontier$
+	\STATE create a vertex set $Explored$
+	\STATE $Cost[startNode] \gets 0$
+	\STATE $Frontier.add(startNode)$ with priority $Cost[startNode]$
 	\STATE $failed$ to find the shortest path
 \ENDPROCEDURE
 \end{algorithmic}
