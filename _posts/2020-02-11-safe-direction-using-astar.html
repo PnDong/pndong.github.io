@@ -99,6 +99,9 @@ use_math: true
 		\IF{$v = e$}
 			\RETURN $construct$-$path(e)$
 		\ENDIF
+		\STATE add $v$ to $Explored$
+        \FOR{$\forall u \in N(v)$}
+		\ENDFOR
 	\ENDWHILE
 	\STATE $failed$ to find the shortest path
 \ENDPROCEDURE
