@@ -105,7 +105,7 @@ use_math: true
 			\IF{$u \notin Frontier \land u \notin Explored$}
 				STATE $Frontier.add(u)$ with priority $alt$
 			\ELIF{$u \in Frontier \land Cost[u]>alt$}
-				$Frontier.update-priority(u, alt)$
+				$Frontier.update$-$priority(u, alt)$
 			\ENDIF
 		\ENDFOR
 	\ENDWHILE
