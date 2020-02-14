@@ -100,7 +100,13 @@ use_math: true
 			\RETURN $construct$-$path(e)$
 		\ENDIF
 		\STATE add $v$ to $Explored$
-        \FOR{$\forall u \in N(v)$}
+        \FOR{$u \in N(v)$}
+			\STATE $alt \gets Cost[v]+W[u,v]$
+			\IF{$u \notin Frontier \land u \notin Explored$}
+				STATE $Frontier.add(u)$ with priority $alt$
+			\ELIF{$u \in Frontier \land Cost[u]>alt$}
+				$Frontier.update-priority(u, alt)$
+			\ENDIF
 		\ENDFOR
 	\ENDWHILE
 	\STATE $failed$ to find the shortest path
