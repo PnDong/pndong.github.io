@@ -57,12 +57,12 @@ use_math: true
 \caption{Dijkstra's Algorithm}
 \begin{algorithmic}
 \PROCEDURE{Dijkstra}{$G, s, e$}
-	\STATE initialize $Cost[v], \forall v \in G(V)$
-	\STATE initialize $Predecessor[v], \forall v \in G(V)$
+	\STATE initialize $cost[v], \forall v \in G(V)$
+	\STATE initialize $predecessor[v], \forall v \in G(V)$
 	\STATE create a vertex priority queue $Frontier$
 	\STATE create a vertex set $Explored$
-	\STATE $Cost[s] \gets 0$
-	\STATE $Frontier.add(s)$ with priority $Cost[s]$
+	\STATE $cost[s] \gets 0$
+	\STATE $Frontier.add(s)$ with priority $cost[s]$
 	\WHILE{$\neg Frontier.is$-$empty()$}
         \STATE $v \gets Frontier.extract$-$min()$
 		\IF{$v = e$}
@@ -70,13 +70,13 @@ use_math: true
 		\ENDIF
 		\STATE add $v$ to $Explored$
         \FOR{$u \in N(v)$}
-			\STATE $alt \gets Cost[v]+W[u,v]$
+			\STATE $alt \gets cost[v]+w[u,v]$
 			\IF{$u \notin Frontier \land u \notin Explored$}
 				\STATE $Frontier.add(u)$ with priority $alt$
-				\STATE $Predecessor[u] \gets v$
-			\ELIF{$u \in Frontier \land Cost[u]>alt$}
+				\STATE $predecessor[u] \gets v$
+			\ELIF{$u \in Frontier \land cost[u]>alt$}
 				\STATE $Frontier.update$-$priority(u, alt)$
-				\STATE $Predecessor[u] \gets v$
+				\STATE $predecessor[u] \gets v$
 			\ENDIF
 		\ENDFOR
 	\ENDWHILE
@@ -86,10 +86,10 @@ use_math: true
 \end{algorithm}
 " %}
 
-	위 다익스트라 최단 경로 탐색 알고리즘은 간선의 가중치로 정렬되는 우선순위 큐(priority queue)를 이용해 도달하는 데 드는 비용 $g(n)$이 가장 작은 노드부터 탐색해나간다.
+	위 다익스트라 최단 경로 탐색 알고리즘은 간선의 가중치로 정렬되는 우선순위 큐(priority queue)를 이용해 도달하는 데 드는 비용 $cost[n]$이 가장 작은 노드부터 탐색해나간다.
 	A* 알고리즘은 다익스트라 알고리즘과 같이 우선순위 큐를 이용하지만,
-	도달하는 데 드는 경로 비용 $g(n)$이 아닌 경로 비용에 휴리스틱 함수의 값이 합쳐진 값, 즉 $f(n) = g(n) + h(n)$이 가장 작은 노드부터 탐색해나간다.
-	이를 직관적으로 이해해보자면, 노드 $n$을 판단할 때 노드 $n$에 도달하는 최소 비용 $g(n)$은 이미 주어졌고, 노드 $n$에서 목적지 노드까지 가는 비용은 이론적인 최소값 $h(n)$으로 대충 정한 것이다.
+	도달하는 데 드는 경로 비용 $cost[n]$이 아닌 경로 비용에 휴리스틱 함수의 값이 합쳐진 값, 즉 $f(n) = cost[n] + h(n)$이 가장 작은 노드부터 탐색해나간다.
+	이를 직관적으로 이해해보자면, 노드 $n$을 판단할 때 노드 $n$에 도달하는 최소 비용 $cost[n]$은 이미 주어졌고, 노드 $n$에서 목적지 노드까지 가는 비용은 이론적인 최소값 $h(n)$으로 대충 정한 것이다.
 	그래프 탐색에서 A* 알고리즘은 휴리스틱 $h(n)$이 다음과 같은 조건, 즉 일관성(consistency)을 갖출 때 완결성과 최적성을 모두 갖춘다. $c(n,n')$은 노드 $n$에서 노드 $n'$으로 가는 비용을 뜻한다.
 	$$h(n) \leq c(n,n') + h(n')$$
 	위 수식은 삼각 부등식(triangle inequality)의 형태를 띠는데, 목적지까지의 유클리드 거리는 위 조건을 만족한다는 것을 쉽게 알 수 있다.
