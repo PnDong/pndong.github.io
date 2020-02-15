@@ -24,7 +24,7 @@ use_math: true
 	현재는 다양한 길찾기 서비스가 있다. 구글, 네이버 등 다양한 기업들이 출발지와 목적지를 입력하면 최단경로를 찾아주는 서비스를 운영하고 있다.
 	한편, 공사중인 건물 붕괴 사고, 길거리 범죄, 차량 사고 등 많은 일들이 우리가 평소에 거니는 도로에서 일어난다. 하지만 이런 길찾기 서비스는 최단 경로를 찾는 것에 관심이 있고, '안전한' 경로를 찾는 것에는 큰 관심이 없다.
 	따라서 기존의 길찾기 서비스를 이용하는 사용자들은 가는 길에 어떤 위험요소가 있는지 확인하기 힘들고, 알고 있더라도 다양하고 많은 위험요소를 고려해 대체 경로를 찾는 것이 쉽지 않다.
-	우리가 SW개발보안경진대회 해커톤에서 개발한 '안전길찾기'의 프로토타입은 이런 위험 요소들을 미리 확인하고,
+	우리가 2인 팀으로 출전해 SW개발보안경진대회 해커톤에서 개발한 '안전길찾기'의 프로토타입은 이런 위험 요소들을 미리 확인하고,
 	A* Search 알고리즘에 관한 정리를 이용해 완전하면서 안정적으로 최단 대체 경로, 즉 '안전한 길'을 제안한다. 이 글에서는 이론적인 배경부터 어떤 API와 클라우드 서비스를 활용해서 개발했는지를 다룰 것이다.
 	아이디어 및 알고리즘 부분에서는 안전길찾기의 핵심 아이디어를 다루고, 그래프로 표현된 지도에서
 	유클리드 거리 외에 다양한 안전 속성을 가지고 있는 간선에 대해 A* Search 알고리즘이 안전을 고려한 최단 경로를 찾는 데 어떻게 완결성(completeness)과 최적성(optimality)을 가지는지 그 이론적 배경을 다룬다.
@@ -234,7 +234,7 @@ public double getSafetyCost(MapVertex v, MapVertex u) {
 <h3>데이터베이스 및 인터페이스 구축</h3>
 
 <p>
-	대회 주최측에서 5만원 제한의 Microsoft Azure Pass를 제공해주었고, 이를 이용해 가상머신을 호스팅하고 데이터베이스 서버를 구축했다.
+	대회 주최측에서 Microsoft Azure 클라우드 서비스를 이용할 수 있는 5만원 제한의 Microsoft Azure Pass를 제공해주었고, 이를 이용해 가상머신을 호스팅하고 데이터베이스 서버를 구축했다.
 </p>
 
 <a href="/assets/images/{{page.id}}/azure.png"> <img
@@ -258,21 +258,30 @@ public double getSafetyCost(MapVertex v, MapVertex u) {
 <a href="/assets/images/{{page.id}}/screenshot1.png"> <img
 	class="center-block img-responsive"
 	src="/assets/images/{{page.id}}/screenshot1.png" alt="screenshot1"/></a>
+<p align="center">로그인 UI.</p>
+
 <a href="/assets/images/{{page.id}}/screenshot2.png"> <img
 	class="center-block img-responsive"
 	src="/assets/images/{{page.id}}/screenshot2.png" alt="screenshot2"/></a>
+<p align="center">지도 UI.</p>
+
 <a href="/assets/images/{{page.id}}/screenshot3.png"> <img
 	class="center-block img-responsive"
 	src="/assets/images/{{page.id}}/screenshot3.png" alt="screenshot3"/></a>
+<p align="center">길찾기를 실행한 모습.</p>
+
 <a href="/assets/images/{{page.id}}/screenshot4.png"> <img
 	class="center-block img-responsive"
 	src="/assets/images/{{page.id}}/screenshot4.png" alt="screenshot4"/></a>
+<p align="center">길 안전 평가 UI.</p>
+
 <a href="/assets/images/{{page.id}}/screenshot5.png"> <img
 	class="center-block img-responsive"
 	src="/assets/images/{{page.id}}/screenshot5.png" alt="screenshot5"/></a>
+<p align="center">중요도 설정 UI.</p>
 
 <p>
-	우리 팀은 안전길찾기 프로토타입의 최종 발표를 마치고, 한국정보보호학회장상과 스패로우상 두개의 상을 수상하며 대회를 성공적으로 마쳤다.
+	우리 팀은 안전길찾기 프로토타입의 최종 발표를 마치고, 한국정보보호학회장상과 스패로우상, 총 두 개의 상을 수상하며 대회를 성공적으로 마쳤다.
 </p>
 
 	
