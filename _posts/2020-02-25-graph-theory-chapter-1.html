@@ -30,27 +30,27 @@ use_math: true
 <h2>그래프</h2>
 
 <p>
-	그래프는 정점(노드) 집합 $V$와 간선(링크) 집합 $E$, 한 쌍의 집합 $G = (V,E)$ 으로 나타낸다. 여기서 $E \subseteq [V]^2$ 이고, 다시말해 $E$는 $V$의 두 원소의 집합을 원소로 갖는 집합이다.
+	그래프는 정점(노드) 집합 $V$ 와 간선(링크) 집합 $E$, 한 쌍의 집합 $G = (V,E)$ 으로 나타낸다. 여기서 $E \subseteq [V]^2$ 이고, 다시말해 $E$ 는 $V$ 의 두 원소의 집합을 원소로 갖는 집합이다.
 	간선을 튜플로 표기하는 방법도 있지만, 앞으로 다룰 그래프에서는 간선에 인접한 노드의 순서가 중요하지 않기 때문에 집합으로 표현해도 무방하다.
 </p>
 
 <p style="text-indent:20px;">
-	그래프 $G$의 정점 집합은 $V(G)$로 나타내고 간선 집합은 $E(G)$로 나타낸다. 그래프 $G$의 정점의 수는 $|G|$이며, 간선의 수는 $||G||$로 나타낸다. 정점의 수는 그래프의 차수(order)라고도 부른다.
+	그래프 $G$의 정점 집합은 $V(G)$ 로 나타내고 간선 집합은 $E(G)$ 로 나타낸다. 그래프 $G$ 의 정점의 수는 $|G|$ 이며, 간선의 수는 $||G||$ 로 나타낸다. 정점의 수는 그래프의 차수(order)라고도 부른다.
 	$G = (\emptyset, \emptyset)$ 은 empty graph 이고, 차수가 0 또는 1인 그래프를 trivial graph 라고 부른다.
-	모든 정점이 서로 인접한(adjacent) 그래프를 complete graph 라고 하고, $n$개의 정점을 가지는 complete graph 는 $K^n$으로 나타낸다.
+	모든 정점이 서로 인접한(adjacent) 그래프를 complete graph 라고 하고, $n$ 개의 정점을 가지는 complete graph 는 $K^n$ 으로 나타낸다.
 </p>
 
 <p style="text-indent:20px;">
-	$V' \subseteq V$ 이고 $E' \subseteq E$ 이면, $G' = (V', E')$ 은 $G$의 subgraph 이며, $G' \subseteq G$ 로 표시한다.
+	$V' \subseteq V$ 이고 $E' \subseteq E$ 이면, $G' = (V', E')$ 은 $G$ 의 subgraph 이며, $G' \subseteq G$ 로 표시한다.
 	두 종류의 subgraph 는 자주 사용되므로, 따로 정의하도록 한다.
 	<ul>
 	<li>
-		Induced subgraph : 만약 $G$의 subgraph $G'$이 $x,y \in V'$ 이라는 조건을 갖는 간선 $xy \in E$ 를 모두 포함한다면, $G'$은 $G$의 induced subgraph 라고 한다.
-		직관적으로 $G$에 있는 임의의 정점과 그 정점에 붙어있는 간선을 제거한 그래프는 $G$의 induced subgraph 이다.
+		Induced subgraph : 만약 $G$ 의 subgraph $G'$ 이 $x,y \in V'$ 이라는 조건을 갖는 간선 $xy \in E$ 를 모두 포함한다면, $G'$ 은 $G$ 의 induced subgraph 라고 한다.
+		직관적으로 $G$ 에 있는 임의의 정점과 그 정점에 붙어있는 간선을 제거한 그래프는 $G$ 의 induced subgraph 이다.
 	</li>
 	<li>
-		Spanning subgraph : 만약 $G$의 subgraph $G'$에 대해 $V=V'$ 이면, $G'$은 $G$의 spanning subgraph 이다.
-		직관적으로 $G$에 있는 임의의 간선을 제거한 그래프는 $G$의 spanning subgraph 이다.
+		Spanning subgraph : 만약 $G$ 의 subgraph $G'$ 에 대해 $V=V'$ 이면, $G'$ 은 $G$ 의 spanning subgraph 이다.
+		직관적으로 $G$ 에 있는 임의의 간선을 제거한 그래프는 $G$ 의 spanning subgraph 이다.
 	</li>
 	</ul>
 </p>
