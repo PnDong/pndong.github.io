@@ -14,7 +14,7 @@ use_math: true
 
 <p>
 	학교에서 이산수학 강의를 듣고, 그래프 부분이 재미있었고 더 배워보고 싶다는 생각이 들었다. 그래서 혼자 그래프 이론 공부를 하면서, 정리한 내용을 블로그에 올리기로 했다.
-	그래프 이론을 공부하기 위해 사용한 책은 Reinhard Diestel (2017)의 Graph Theory라는 책이다. 원서로 읽는게 쉽지는 않지만, 영어로 학술적인 것을 읽는 능력은 꼭 필요할 것 같아서 그냥 원서로 읽게 되었다.
+	그래프 이론을 공부하기 위해 사용한 책은 Reinhard Diestel (2017)의 Graph Theory 라는 책이다. 원서로 읽는게 쉽지는 않지만, 영어로 학술적인 것을 읽는 능력은 꼭 필요할 것 같아서 그냥 원서로 읽게 되었다.
 	앞으로는 한 강의를 읽으면 블로그에 중요하다고 생각하거나 흥미로웠던 내용을 포스팅 하면서 정리하는 식으로 공부를 해 나가려고 한다. 부족한 내용이나 고쳐야할 부분은 수시로 업데이트할 예정이다.
 	책을 참고하기 쉽게 하기 위해 명제나 정리의 번호는 사용한 교재와 동일하게 했다.
 </p>
@@ -36,14 +36,23 @@ use_math: true
 
 <p style="text-indent:20px;">
 	그래프 $G$의 정점 집합은 $V(G)$로 나타내고 간선 집합은 $E(G)$로 나타낸다. 그래프 $G$의 정점의 수는 $|G|$이며, 간선의 수는 $||G||$로 나타낸다. 정점의 수는 그래프의 차수(order)라고도 부른다.
-	$G = (\emptyset, \emptyset)$ 은 empty graph이고, 차수가 0 또는 1인 그래프를 trivial grpah라고 부른다.
-	모든 정점이 서로 인접한(adjacent) 그래프를 complete graph라고 하고, $n$개의 정점을 가지는 complete graph는 $K^n$으로 나타낸다.
+	$G = (\emptyset, \emptyset)$ 은 empty graph 이고, 차수가 0 또는 1인 그래프를 trivial graph 라고 부른다.
+	모든 정점이 서로 인접한(adjacent) 그래프를 complete graph 라고 하고, $n$개의 정점을 가지는 complete graph 는 $K^n$으로 나타낸다.
 </p>
 
 <p style="text-indent:20px;">
-	$V' \subseteq V$ 이고 $E' \subseteq E$ 이면, $G' = (V', E')$ 은 G의 subgraph이며, $G' \subseteq G$ 로 표시한다.
-	만약 $G$의 subgraph $G'$이 $x,y \in V'$ 이라는 조건을 갖는 간선 $xy \in E$ 를 모두 포함한다면, $G'$은 $G$의 induced subgraph라고 한다.
-	만약 $G$의 subgraph $G'$에 대해 $V=V'$ 이면, $G'$은 $G$의 spanning subgraph이다.
+	$V' \subseteq V$ 이고 $E' \subseteq E$ 이면, $G' = (V', E')$ 은 $G$의 subgraph 이며, $G' \subseteq G$ 로 표시한다.
+	두 종류의 subgraph 는 자주 사용되므로, 따로 정의하도록 한다.
+	<ul>
+	<li>
+		Induced subgraph : 만약 $G$의 subgraph $G'$이 $x,y \in V'$ 이라는 조건을 갖는 간선 $xy \in E$ 를 모두 포함한다면, $G'$은 $G$의 induced subgraph 라고 한다.
+		직관적으로 $G$에 있는 임의의 정점과 그 정점에 붙어있는 간선을 제거한 그래프는 $G$의 induced subgraph 이다.
+	</li>
+	<li>
+		Spanning subgraph : 만약 $G$의 subgraph $G'$에 대해 $V=V'$ 이면, $G'$은 $G$의 spanning subgraph 이다.
+		직관적으로 $G$에 있는 임의의 간선을 제거한 그래프는 $G$의 spanning subgraph 이다.
+	</li>
+	</ul>
 </p>
 
 <h2>정점의 차수</h2>
