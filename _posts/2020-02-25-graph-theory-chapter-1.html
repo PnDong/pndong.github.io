@@ -57,7 +57,7 @@ use_math: true
 <a href="/assets/images/{{page.id}}/a_graph.png"> <img width="400" height="300"
 	class="center-block img-responsive"
 	src="/assets/images/{{page.id}}/a_graph.png" alt="a graph"/></a>
-<p align="center">그래프 $G = (V, E)$ $$V = \{1, 2, 3, 4, 5, 6, 7\} \\ E = \{\{1,2\},\{1,3\},\{1,7\},\{3,4\}, \\ \{3,7\},\{4,5\},\{4,7\},\{5,7\},\{5,6\}\}$$</p>
+<p align="center">[그림 1.1.1] 그래프 $G = (V, E)$ $$V = \{1, 2, 3, 4, 5, 6, 7\} \\ E = \{\{1,2\},\{1,3\},\{1,7\},\{3,4\}, \\ \{3,7\},\{4,5\},\{4,7\},\{5,7\},\{5,6\}\}$$</p>
 
 <table align="center" style="table-layout:fixed">
 	<tr>
@@ -106,7 +106,7 @@ use_math: true
 
 <p>
 	경로(path) $P = (V,E)$ 는 다음과 같은 형태의 non-empty 그래프이다.
-	$$V = {x_0, x_1, ..., x_k} \;\;\;\; \\ E = {x_0x_1, x_1x_2, ..., x_{k-1}x_k}$$
+	$$V = \{x_0, x_1, ..., x_k\} \;\;\;\; \\ E = \{x_0x_1, x_1x_2, ..., x_{k-1}x_k\}$$
 	$x_i$ 는 모두 다르다. 단순히 $P = x_0x_1...x_k$ 로 쓰고, $x_0$ 부터 $x_k$ 까지의 경로라고 읽는다.
 </p>
 
@@ -116,12 +116,19 @@ use_math: true
 </p>
 
 <p>
-	<b style="font-size:20px;">Proposition 1.3.1.</b> 모든 그래프는 최소 차수 $\delta(G)$ 를 길이로 갖는 경로를 포함하고 (서브그래프로 갖고),
+	<b style="font-size:20px;">Proposition 1.3.1.</b> 모든 그래프 $G$ 는 최소 차수 $\delta(G)$ 를 길이로 갖는 경로를 포함하고 (서브그래프로 갖고),
 	$\delta(G) \geq 2$ 일 때, 적어도 길이가 $\delta(G) + 1$ 이상인 순환을 포함한다.
 </p>
 
 <p>
 	$Proof.$
-	간선의 개수 $|E|=\frac{1}{2}\sum_{v \in V}d(v)$ 가 정수이기 때문에, $\sum_{v \in V}d(v)$ 는 짝수이다.
+	$x_0x_1...x_k$ 를 $G$ 의 최장 경로(longest path)라고 하자. 이것이 최장 경로이기 때문에 정점 $x_k$ 의 이웃 정점들은, 모두 이 경로 안에 있다. (그렇지 않으면 최장 경로가 아니게 된다. [그림 1.2] 참고.)
+	그러므로, $k \geq d(x_k) \geq \delta(G)$ 이다. 정점 $k$의 이웃중에 가장 작은 번호(아래첨자)를 가진 $x_i$ 를 생각해보자.
+	순환의 정의에 따라 순환 $x_i...x_kx_i$ 이 존재하고, 최소 차수의 정의에 따라 $\delta(G) + 1$ 의 길이를 갖는다.
 	$$\tag*{$\Box$}$$
 </p>
+
+<a href="/assets/images/{{page.id}}/longest_path.png"> <img
+	class="center-block img-responsive"
+	src="/assets/images/{{page.id}}/longest_path.png" alt="a graph"/></a>
+<p align="center">[그림 1.2] 최장 경로와 마지막 정점($x_k$)의 연결을 표시한 그림</p>
