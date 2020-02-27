@@ -16,6 +16,7 @@ use_math: true
 	학교에서 이산수학 강의를 듣고, 그래프 부분이 재미있었고 더 배워보고 싶다는 생각이 들었다. 그래서 혼자 그래프 이론 공부를 하면서, 정리한 내용을 블로그에 올리기로 했다.
 	그래프 이론을 공부하기 위해 사용한 책은 Reinhard Diestel (2017)의 Graph Theory라는 책이다. 원서로 읽는게 쉽지는 않지만, 영어로 학술적인 것을 읽는 능력은 꼭 필요할 것 같아서 그냥 원서로 읽게 되었다.
 	앞으로는 한 강의를 읽으면 블로그에 중요하다고 생각하거나 흥미로웠던 내용을 포스팅 하면서 정리하는 식으로 공부를 해 나가려고 한다. 부족한 내용이나 고쳐야할 부분은 수시로 업데이트할 예정이다.
+	책을 참고하기 쉽게 하기 위해 명제나 정리의 번호는 사용한 교재와 동일하게 했다.
 </p>
 <!--more-->
 
@@ -33,14 +34,31 @@ use_math: true
 	간선을 튜플로 표기하는 방법도 있지만, 앞으로 다룰 그래프에서는 간선이 인접한 노드의 순서가 중요하지 않기 때문에 집합으로 표현해도 무방하다.
 </p>
 
-<p>
+<p style="text-indent:20px;">
 	그래프 $G$의 정점 집합은 $V(G)$로 나타내고 간선 집합은 $E(G)$로 나타낸다. 그래프 $G$의 정점의 수는 $|G|$이며, 간선의 수는 $||G||$로 나타낸다. 정점의 수는 그래프의 차수(order)라고도 부른다.
 	$G = (\emptyset, \emptyset)$는 empty graph이고, 차수가 0 또는 1인 그래프를 trivial grpah라고 부른다.
 	모든 정점이 서로 인접한(adjacent) 그래프를 complete graph라고 하고, $n$개의 정점을 가지는 complete graph는 $K^n$으로 나타낸다.
 </p>
 
-<p>
+<p style="text-indent:20px;">
 	$V' \subseteq V$이고 $E' \subseteq E$이면, $G' = (V', E')$은 G의 subgraph이며, $G' \subseteq G$로 표시한다.
 	만약 $G$의 subgraph $G'$이 $x,y \in V'$이라는 조건을 갖는 간선 $xy \in E$를 모두 포함한다면, $G'$은 $G$의 induced subgraph라고 한다.
 	만약 $G$의 subgraph $G'$에 대해 $V=V'$이면, $G'$은 $G$의 spanning subgraph이다.
+</p>
+
+<h2>정점의 차수</h2>
+
+<p>
+	정점 $v$에 연결된 간선의 수 $|E(v)|$를 정점 $v$의 차수(degree) $d_G(v) = d(v)$라고 한다. 당연하게도, 이는 정점에 간선으로 직접 연결된 이웃(neighbor)의 수 $|N_G(v) = N(v)|$와 같다.
+	최소 차수는 $\delta(G) := min{d(v) | v \in V}$으로 정의하고, 최대 차수는 $\Delta(G) := max{d(v) | v \in V}$으로 정의한다.
+	평균 차수는 $d(G) := \frac{1}{|V|} \sum_{v \in V}d(v)$으로 정의한다.
+	정점당 간선의 수는 $\epsilon(G) := |E|/|V|$으로 쓰는데, 간선 하나당 정점 2개의 차수를 담당하기 때문에 $\epsilon(G) = \fraction{1}{2}d(G)$이다. 다음은 차수에 관한 간단한 명제의 증명이다.
+</p>
+
+<p>
+	<b>Proposition 1.2.1.</b> The number of vertices of odd degree in a graph is always even.
+</p>
+
+<p>
+	$Proof.$ 간선의 개수 $|E|=\fraction{1}{2}\sum_{v \in V}d(v)$가 정수이기 때문에, $\sum_{v \in V}d(v)$는 짝수이다.
 </p>
