@@ -26,7 +26,7 @@ use_math: true
 	여기서는 그래프란 무엇이며, 그래프의 요소들이 서로 어떻게 연관되어 있고, 특수한 성질을 가지는 그래프에는 어떤 것들이 있는지에 대해 중점적으로 다룰 것이다.
 </p>
 
-<h2>그래프</h2>
+<h2>그래프(graph)</h2>
 
 <p>
 	그래프는 정점(노드) 집합 $V$ 와 간선(링크) 집합 $E$ , 한 쌍의 집합 $G = (V,E)$ 으로 나타낸다. 여기서 $E \subseteq [V]^2$ 이고, 다시말해 $E$ 는 $V$ 의 두 원소의 집합을 원소로 갖는 집합이다.
@@ -82,7 +82,7 @@ use_math: true
 	</tr>
 </table>
 
-<h2>정점의 차수</h2>
+<h2>정점의 차수(degree)</h2>
 
 <p>
 	정점 $v$ 에 연결된 간선의 수 $|E(v)|$ 를 정점 $v$ 의 차수(degree) $d_G(v) = d(v)$ 라고 한다.
@@ -102,7 +102,7 @@ use_math: true
 	$$\tag*{$\Box$}$$
 </p>
 
-<h2>경로와 순환</h2>
+<h2>경로(path)와 순환(cycle)</h2>
 
 <p>
 	경로(path) $P = (V,E)$ 는 다음과 같은 형태의 non-empty 그래프이다.
@@ -132,3 +132,57 @@ use_math: true
 	class="center-block img-responsive"
 	src="/assets/images/{{page.id}}/longest_path.png" alt="a graph"/></a>
 <p align="center">[그림 1.2] 최장 경로와 마지막 정점($x_k$)의 연결을 표시한 그림</p>
+
+<p>
+	그래프에서 특수한 경로와 순환을 정의하면, 이는 그래프의 크기(정점의 수)와 밀접한 관련이 있다. 이에 대한 이야기는 우선 넘어가도록 하겠다.
+</p>
+
+<h2>연결성(connectivity)</h2>
+
+<p>
+	Empty graph 가 아닌 그래프 $G$ 의 임의의 두 개의 정점이 $G$ 안에 있는 경로로 이어져 있으면, $G$ 는 연결(connected)되어 있다. 반대말은 끊김(disconnected)이다.
+	만약 $U \subseteq V(G)$ 일 때 $G$ 의 induced subgraph $G[U]$ 가 이어져 있으면, $U$ 는 ($G$ 안에서) 연결되어 있다고 한다.
+	$G$ 가장 큰 연결된 subgraph 를 $G$ 의 component 라고 한다.
+</p>
+
+<p>
+	연결성에서는 연결 그래프에서 어떤 정점이나 간선을 제거해야지 최소한의 제거로 끊긴 그래프로 만들 수 있는지가 중요하다. 얼마나 많은 정점/간선을 제거하느냐는 얼마나 강하게 연결되어 있느냐를 뜻한다.
+	그래프를 두 부분으로 분리(separate)하는 최소한의 정점의 수를 연결성(connectivity)라고 하고, 최소한의 간선의 수를 간선 연결성(edge-connectivity)라고 한다.
+	엄밀한 정의는 다음과 같다.
+	<ul>
+	<li>
+		Connectivity $\kappa(G)$ : 만약 $|G| > k$ 이고 모든 집합 $X \subseteq V, |X| < k$ 에 대해 $G - X$ (여기서 -는 원래 그래프에서 노드를 뺀다는 뜻을 가진다) 가 연결된 그래프이면,
+		$G$ 를 $k$-connected 그래프라고 부른다. 여기서 가장 큰 $k$ 를 연결성 $\kappa(G)$ 이라고 한다.
+	</li>
+	<li>
+		Edge-connectivity $\lambda(G)$ : 만약 $|G| > 1$ 이고 모든 집합 $F \subseteq E, |F| < l$ 에 대해 $G - F$ 가 연결된 그래프이면,
+		$G$ 를 $l$-edge-connected 그래프라고 부른다. 여기서 가장 큰 $l$ 를 간선 연결성 $\lambda(G)$ 이라고 한다.
+	</li>
+	</ul>
+</p>
+
+<p>
+	<b style="font-size:20px;">Proposition 1.4.2.</b> 그래프 $G$ 가 non-trivial 그래프이면, $\kappa(G) \leq \lambda(G) \leq \delta(G)$ 이다.
+</p>
+
+<p>
+	$Proof.$
+	가장 낮은 차수 $\delta(G)$ 를 가지는 정점 $v$ 를 그래프에서 분리하려면(고립시키려면) $\delta(G)$ 개의 간선을 제거하면 되므로, $\lambda(G) \leq \delta(G)$ 이 성립한다.
+	나머지를 증명하려면, 우선 $F$ 를 $G-F$를 끊기게 만드는 $\lambda(G)$ 개의 간선의 집합이라고 하자. 이런 집합은 $\lambda$ 의 정의에 의해 반드시 존재한다.
+	우리는 $\kappa(G) \leq |F|$를 증명하면 된다. 두 가지의 경우로 나눈다.
+	<ol type="i">
+    <li>
+	$F$ 안의 어떤 간선과도 붙어있지 않은 정점 $v$ 가 $G$ 에 존재할 때 :
+	끊긴 그래프 $G - F$ 에서 $v$ 가 있는 component 를 $C$ 라고 하자. $C$ 에서 $F$ 안의 어떤 간선과 붙어있는 정점은 $v$ 와 $G - C$ 를 분리한다.
+	그리고, $F$ 의 최소성에 의해, $F$ 안의 간선의 양 끝이 모두 $C$ 에 있는 경우는 없다. 따라서, 그렇게 분리하는 정점은 기껏해야 |F| 개 밖에 없다.
+	그러므로, $\kappa(G) \leq |F|$ 이다.
+	</li>
+    <li>
+	$G$ 의 모든 정점이 $F$ 의 어떤 간선과 붙어있을 때 :
+	$v$ 를 어떤 정점이라고 하고, 역시 끊긴 그래프 $G - F$ 에서 $v$ 가 있는 component 를 $C$ 라고 하자. 다시, $F$ 의 최소성에 의해, $C$ 안에 있는 $v$ 의 이웃은 서로 다른 $F$ 의 간선과 붙어있다.
+	따라서, $d_G(v) \leq |F|$ 이다. $v$ 의 이웃 $N_G(v)$ 는 $\{v\}\union N(v) = V$ 만 아니라면 $v$ 를 그래프에서 분리시키는 정점들이기 때문에, 이것은 $\kappa(G) \leq |F|$ 를 뜻한다.
+	하지만, $v$ 는 임의의 정점이다. 따라서 우리는 $G$ 가 complete graph 라고 가정할 수 있고(연결성이 최대가 되는 그래프이므로), 그러면 $\kappa(G) = \lambda(G) = |G| - 1$ 이다.
+	</li>
+	</ol>
+	$$\tag*{$\Box$}$$
+</p>
