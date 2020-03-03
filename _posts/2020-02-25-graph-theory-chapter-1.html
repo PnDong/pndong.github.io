@@ -82,6 +82,10 @@ use_math: true
 	</tr>
 </table>
 
+<p>
+	다른 기호나 용어들은 그때그때 설명하도록 하겠다.
+</p>
+
 <h2>정점의 차수(degree)</h2>
 
 <p>
@@ -151,7 +155,7 @@ use_math: true
 	엄밀한 정의는 다음과 같다.
 	<ul>
 	<li>
-		Connectivity $\kappa(G)$ : 만약 $|G| > k$ 이고 모든 집합 $X \subseteq V, |X| < k$ 에 대해 $G - X$ (여기서 -는 원래 그래프에서 노드를 뺀다는 뜻을 가진다) 가 연결된 그래프이면,
+		Connectivity $\kappa(G)$ : 만약 $|G| > k$ 이고 모든 집합 $X \subseteq V, |X| < k$ 에 대해 $G - X$ (여기서 -는 원래 그래프에서 정점를 뺀다는 뜻을 가진다) 가 연결된 그래프이면,
 		$G$ 를 $k$-connected 그래프라고 부른다. 여기서 가장 큰 $k$ 를 연결성 $\kappa(G)$ 이라고 한다.
 	</li>
 	<li>
@@ -186,4 +190,119 @@ use_math: true
 	</li>
 	</ol>
 	$$\tag*{$\Box$}$$
+</p>
+
+<h2>트리(tree)와 포레스트(forest)</h2>
+
+<p>
+	포레스트(forest)는 순환(cycle)이 존재하지 않는 비순환(acyclic) 그래프를 뜻하고, 트리(tree)는 연결된(connected) 포레스트를 뜻한다. 단어의 의미에서도 알 수 있듯이, 트리가 모여서 포레스트가 되는 것라고 볼 수도 있다.
+	여기서는 트리에 대한 근본적인 정리를 하나 제시하고, normal tree 라는 특수한 트리를 살펴볼 것이다.
+</p>
+
+<p>
+	<b style="font-size:20px;">Theorem 1.5.1.</b> 그래프 $T$ 에 대한 다음의 문장들은 동치(equivalent)이다.
+	<ol type="i">
+    <li>
+	$T$ 는 트리(tree)이다.
+	</li>
+    <li>
+	$T$ 의 어느 두 정점은 유일한 경로로 이어져 있다.
+	</li>
+    <li>
+	$T$ 는 최소한으로 연결되어있다. 즉, $T$ 는 연결 그래프이지만, $\forall e \in E(T)$ 에 대해 $T-e$ 는 끊어진 그래프이다.
+	</li>
+    <li>
+	$T$ 는 최대한으로 비순환이다. 즉, $T$ 는 비순환 그래프이지만, 인접하지 않은 모든 두 정점 $x,y \in V(T)$ 에 대해 $T+xy$ 는 순환을 포함하는 그래프이다.
+	</li>
+	</ol>
+	$$\tag*{$\Box$}$$
+</p>
+
+<p>
+	컴퓨터 과학의 자료구조를 접해본 사람은 익숙하겠지만, 트리에서 하나의 정점을 루트(root)로 지정할 수 있다. 이런 경우에 이 트리는 rooted tree 이다.
+	이렇게 트리 $T$ 의 루트를 지정하면, $V(T)$ 에 대한 partial ordering (reflexive, antisymmetric and transitive relation) 인 tree-order 정의할 수 있는데,
+	$x \in rTy$ 이면 $x \leq y$ 이라고 쓴다. (여기서 $rTy$ 는 $r$서 $y$까지의 경로이고, 뿌리(root)가 땅에 박혀있는 나무에서 높이를 생각하는 것이 이해하기에 좋다.)
+	$G$ 안에 포함된 rooted tree $T$ 를 생각할 때, $G$ 의 경로 중에 시작 정점과 끝 정점만이 $T$ 에 있는 경로의 시작 정점과 끝 정점이 tree-order 로 비교 가능할 때,
+	이 트리를 $G$에 대한 normal tree 라고 한다. $V(G) = V(T)$ 이면, 이 트리는 normal spanning tree 이라고 하고, $T$ 의 두 정점들은 $G$ 에서 인접할 때 항상 tree-order 로 비교가능하다.
+	Normal tree $T$ 의 분리 속성(separation property)을 $G$ 가 반영을 하기 때문에, $T$는 $G$ 의 구조를 살펴보는 중요한 요소이다.
+	또, 모든 연결 그래프는 normal spanning tree 를 포함한다. 이 포스팅에서는 엄밀하게 다루지는 않는다.
+</p>
+
+<h2>이분 그래프(bipartite graph)</h2>
+
+<p>
+	정수 $r \geq 2$ 에 대하여, $r$-partite 그래프는 정점들을 $r$ 개의 class 를 갖는 partition 으로 나눠질 수 있는 그래프를 말한다. 이 때, 같은 class 내부의 정점들을 인접(adjacent)하지 않아야 한다.
+	보통, '2-partite' 대신에 'bipartite' 라는 말을 쓴다.
+	다음은 이분 그래프에 대한 흥미로운 명제이다. (순방향 증명이 교재에 없어서 추가했다.)
+</p>
+
+<p>
+	<b style="font-size:20px;">Proposition 1.6.1.</b> 이분 그래프는 길이가 홀수인 순환을 포함하지 않는 그래프이고, 역도 성립한다.
+</p>
+
+<p>
+	$Proof.$<br>
+	우선 역방향부터 증명한다. 그래프 $G=(V,E)$ 가 길이가 홀수인 순환을 포함하지 않는 그래프라고 하자. $G$ 의 각 component 가 모두 이분 그래프이거나 사소 그래프이면 $G$ 는 이분 그래프이기 때문에,
+	우리는 일반성을 잃지 않고 $G$ 를 연결 그래프라고 가정할 수 있다. $T$ 를 $G$ 의 spanning tree 라고 하고, 루트(root)를 지정한다.
+	모든 $v \in V$ 에 대해 유일한 경로 $rTv$ 는 길이가 홀수이거나 짝수이다. 이렇게 홀수 class 와 짝수 class 로 정점들을 나누어 보자.
+	$G$ 의 간선 $e = xy$ 를 생각해보자. $e \in E(T)$ 이면, $x$ 와 $y$ 는 서로 다른 class 에 있다. 그렇지 않다면, 순환 $C_e := xTy + e$ 을 정의할 수 있다.
+	가정에 의해서 $C_e$ 의 길이는 짝수이고, 정점들은 순환을 따라서 번갈아가며 두 개의 class 로 나눠지는데, 이 때도 $x$ 와 $y$ 는 서로 다른 class 에 있다.<br>
+	다음으로 순방향을 증명하기 위해 대우 명제를 생각해본다. 길이가 홀수인 순환을 포함하는 그래프 $G=(V,E)$ 의 순환을 $C=x_1x_2...x_{2k+1}x_1$ 라고 하자.
+	순환에 포함된 정점들의 집합을 $X$ 라고 하면, $|X|$ 의 차수는 홀수이기 때문에 $X$ 의 bipartition 은 차수가 $k + 1$ 인 집합을 항상 포함하게 된다.
+	하지만 길이가 $2k + 1$ 인 순환에서 서로 이웃하지 않는 집합의 최대 차수는 $k$ 이고, 따라서 이 그래프는 이분 그래프가 아니다.
+	$$\tag*{$\Box$}$$
+</p>
+
+<h2>축약(contraction)과 마이너(minor)</h2>
+
+<p>
+	그래프 사이의 포함 관계에서 induced subgraph 와 spanning subgraph 에 더불어서 설명해야 할 것이 마이너(minor)와 위상적 마이너(topological minor)이다.
+	여기서는 마이너와 위상적 마이너의 관계를 살펴볼 예정이다. 먼저 이 둘에 대해 비형식적인 정의를 하겠다.
+	<ul>
+	<li>
+		위상적 마이너(topological minor) : $Y$ 가 $X$ 의 subdivision $TX$ 를 포함하면, $X$ 는 $Y$ 의 위상적 마이너이다.
+		직관적으로 여기서 subdivision 이란 원래 그래프의 간선 위에 새로운 정점을 추가하는 것이다.
+	</li>
+	<li>
+		마이너(minor) : $Y$ 가 $X$ 의 inflation $IX$ 를 포함하면, $X$ 는 $Y$ 의 위상적 마이너이다.
+		직관적으로 여기서 inflation 이란 원래 그래프의 정점들을 각각 연결된 그래프들로 대체하고, 정점 사이의 간선들을 각각 대체된 연결된 그래프들 사이의 간선으로 대체한다는 것이다.
+	</li>
+	</ul>
+</p>
+
+<p>
+	이 둘의 관계는 다음 명제에서 드러난다.
+</p>
+
+<p>
+	<b style="font-size:20px;">Proposition 1.7.3.</b>
+	<ol type="i">
+    <li>
+	모든 $TX$ 는 $IX$ 이다. 그러므로 모든 위상적 마이너는 마이너이다.
+	</li>
+    <li>
+	$\Delta(X) \leq 3$ 이면, 모든 $IX$ 는 $TX$ 를 포함한다. 그러므로 최대 차수가 3 이하인 모든 마이너는 위상적 마이너이다.
+	</li>
+	</ol>
+	$$\tag*{$\Box$}$$
+</p>
+
+<h2>오일러 순회(Euler tour)</h2>
+
+<p>
+	어렸을 때 했던 한붓그리기처럼, 모든 간선을 정확히 한 번만 거쳐 제자리로 올 수 있는 닫힌 걸음(closed walk, 어떤 정점에서 시작해서 간선을 따라 다시 그 정점으로 갈때까지 지나는 정점들의 순열)을
+	오일러 순회(Euler tour)라고 한다. 다음은 오일러 순회에 대한 유명한 정리이다.
+</p>
+
+<p>
+	<b style="font-size:20px;">Theorem 1.8.1.</b> (Euler 1736)<br>
+	연결 그래프는 모든 정점의 차수가 짝수이면 오일러 순회가 존재하고, 역도 성립한다.
+	$$\tag*{$\Box$}$$
+</p>
+
+<h2>그 외 책에 있는 내용</h2>
+
+<p>
+	Some linear algebra 라는 재미있는 단원이 있는데, cycle 과 bond 를 기저로 하는 벡터 공간(vector space)를 정의하고, 이 둘의 특성을 살펴볼 수 있다.
+	또, Other notions of graphs 라는 단원에서는 앞에서 다루지 않은 hypergraph 나, directed graph , multigraph 등에 대한 개념을 소개해주어서, 관심있는 사람이면 읽어봐도 좋을 것 같다.
 </p>
