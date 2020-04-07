@@ -1,0 +1,252 @@
+---
+layout: default
+title: "Paper Cloud : 논문 서지의 새로운 패러다임"
+date: 2020-04-07 10:00:00 +0900
+published: 2020-04-07 10:00:00 +0900
+comments: true
+categories: development
+tags: [t-sne, embedding, embed, graph, similarity, cosine-similarity, word, bag-of-words, machine-learning, pdf, extract, metadata]
+github: "https://github.com/PnDong/Paper-Cloud"
+use_math: true
+---
+
+<p>
+    연구자들에게 있어서 논문 서지 관리는 매우 중요하다. 시중에는 pdf 등에서 논문의 정보(metadata)를 자동으로 추출하여 나열해주는 프로그램이 많이 있다.
+	하지만 이런 프로그램들은 알파벳 등의 순서의 리스트로 논문의 정보들을 보여주고, 대부분의 경우 이 보여지는 순서는 연구자가 찾고싶은 내용의 순서와는 동떨어져있다.
+	이런 문제를 해결하기 위해, 이 글에서는 Paper Cloud 라는 새로운 방식의 논문 서지 관리 프로그램을 제안한다.
+	Paper Cloud 는 pdf 형태의 각 논문을 추출해서 bag-of-words 의 형태로 나타낸다. 이어서 논문 사이의 cosine similarity 를 계산하고,
+	t-SNE 라는 임베딩 기법을 통해 이를 연구자에게 직관적인 2차원 구름(cloud)의 형태로 보여주는 것이 기본적인 아이디어이다.
+	위와 같은 아이디어를 실제로 사용해 생산성을 높일 수 있도록 이번 프로젝트에서는 Python 과 JDK 를 이용해 GUI 와 여러 필수 기능까지 구현하는 것을 목표로 한다.
+</p>
+<!--more-->
+
+<h2>개요</h2>
+
+<p>
+	연구자들에게 있어서 논문 서지 관리는 매우 중요하다. 시중에는 pdf 등에서 논문의 정보(metadata)를 자동으로 추출하여 나열해주는 프로그램이 많이 있다.
+	하지만 이런 프로그램들은 알파벳 등의 순서의 리스트로 논문의 정보들을 보여주고, 대부분의 경우 이 보여지는 순서는 연구자가 찾고싶은 내용의 순서와는 동떨어져있다.
+	이런 문제를 해결하기 위해, 이 글에서는 Paper Cloud 라는 새로운 방식의 오픈소스 논문 서지 관리 프로그램을 제안한다.
+	Paper Cloud 는 기존의 논문 서지 프로그램과 달리, 2차원 공간에 사용자 컴퓨터에 존재하는 논문들이 보여지고, 그 위치가 알파벳이나 날짜 순이 아닌, 다른 논문과의 연관성을 고려하여 자동으로 지정된다.
+	이 글에서는 우선, 이 Paper Cloud 가 어떤 논문의 pdf 파일에서 텍스트나 메타 데이터를 추출하는 방법에 대해 소개한다.
+	그리고, 추출한 정보를 바탕으로 알맞은 2차원 공간의 임베딩을 찾는 데에 Paper Cloud 가 사용하는 머신러닝 기법을 간단하게 소개한다.
+	다음으로, 실제로 사용되어 생산성을 높일 수 있도록 하는 Paper Cloud Windows Application 을 어떻게 구현했는지에 대해 알아보고, 마지막으로 기대되는 효과에 대해 알아보도록 하겠다.
+</p>
+
+<p>
+	사용한 패키지 및 라이브러리는 다음과 같다.
+</p>
+
+<pre>
+tika-server-1.19.jar
+cermine-1.13.jar
+</pre>
+
+<pre>
+arxiv2bib==1.0.8
+bibtexparser==1.1.0
+certifi==2019.11.28
+chardet==3.0.4
+click==7.1.1
+cycler==0.10.0
+future==0.18.2
+idna==2.9
+isbnlib==3.10.0
+joblib==0.14.1
+kiwisolver==1.1.0
+libbmc==0.2.1
+matplotlib==3.1.3
+mkl-fft==1.0.15
+mkl-random==1.1.0
+mkl-service==2.3.0
+nltk==3.4.5
+numpy==1.18.1
+pandas==1.0.3
+pycryptodome==3.9.7
+pyparsing==2.4.6
+PyPDF2==1.26.0
+PyQt5==5.13.0
+PyQt5-sip==12.7.1
+pyqt5-tools==5.13.0.1.5
+PySocks==1.7.1
+python-dateutil==2.8.1
+python-dotenv==0.12.0
+pytz==2019.3
+requests==2.23.0
+scikit-learn==0.22.2.post1
+scipy==1.4.1
+six==1.14.0
+tika==1.24
+tornado==6.0.4
+urllib3==1.25.8
+wincertstore==0.2
+</pre>
+
+<h2>PDF 추출</h2>
+
+<p>
+	Paper Cloud 는 PDF 형태의 논문에서 두 가지의 데이터를 추출한다.
+	<ol>
+	<li>각 논문 전문의 텍스트 데이터</li>
+	<li>각 논문의 메타 데이터</li>
+	</ol>
+	1번은 논문을 bag-of-words 로 모델링하여 알고리즘에 사용하기 위해서 필요한 데이터이고, 2번은 사용자가 논문에 대한 간단한 정보를 보기 쉽게 하기 위한 데이터이다.
+	이 프로젝트에서는 1번을 추출하기 위해 Tika 를, 2번을 추출하기 위해 Cermine 이라는 Java 라이브러리를 사용한다. Tika 의 파싱 속도가 훨씬 빠르기 때문에 단순 텍스트만 추출해낼 때는 Tika 를 사용했다.
+</p>
+
+<p>
+	추출한 단어를 단어와 빈도수만으로 표현하는 bag-of-words 형태로 나타내기 위해서는 NLP 라이브러리인 NLTK 를 사용했다.
+	Tika 로 바로 추출해낸 텍스트 전문에는 단어가 아닌 텍스트가 많기 때문에, 1차적으로 RegexpTokenizer 를 사용해 정규 표현식 형태로 알맞은 단어를 골라냈다.
+	영문 대문자 2글자의 acronym 이나, 영문자 3글자 이상의 단어들을 허용하는 정규 표현식을 작성했다. 
+</p>
+
+{% highlight python %}
+word_tokens = RegexpTokenizer(r'[A-Z][A-Z]\w?|[a-zA-Z][a-zA-Z]\w+').tokenize(full_text.replace('-\n', ''))
+{% endhighlight %}
+
+<p>
+	단어 중에도 큰 의미를 갖지 않는 단어가 많기 때문에, NLTK 가 정의하는 stopwords 와 테스팅 과정에서 발견된 의미 없는 단어들을 카운팅에서 제외했다.
+</p>
+
+{% highlight python %}
+for word in word_tokens:
+    if word.lower() in counts:
+        counts[word.lower()] += 1
+    elif (word.lower() not in stop_words) & (word.lower() not in ['the', 'on', 'of', 'merely', 'www', 'com', 'every', 'follows', 'without']):
+        counts[word.lower()] = 1
+{% endhighlight %}
+
+<h2>PDF 임베딩</h2>
+
+<p>
+	각 논문 파일을 2차원에 임베딩하기에 앞서, 전처리 과정을 진행했다. 우선 앞 단계에서 빈도수를 계산했던 단어들을 합집합하여 빈도수를 계산했다.
+	다음은 각 파일의 단어 빈도수 list 를 받아 빈도 행렬을 만드는 함수이다.
+</p>
+
+{% highlight python %}
+def make_union_df(word_counts):
+    # Union all words
+    # and make them into a dataframe
+
+    # Union words
+    word_union = []
+    for word_count in word_counts:
+        for key in word_count:
+            if key not in word_union:
+                word_union.append(key)
+
+    # Make frequency matrix
+    frequency_matrix = np.zeros((len(word_counts), len(word_union)))
+    for i in range(len(word_counts)):
+        for j in range(len(word_union)):
+            if word_union[j] not in word_counts[i]:
+                frequency_matrix[i][j] = 0
+            else:
+                frequency_matrix[i][j] = word_counts[i].get(word_union[j])
+
+    # Change the matrix into a dataframe
+    df = pd.DataFrame(data=frequency_matrix, columns=word_union)
+    return df
+{% endhighlight %}
+
+<p>
+	다음 전처리 과정은 빈도 행렬에서 너무 빈번하거나 희소한 단어의 열을 지우고, 최대 빈도와 최소 빈도를 기준으로 min-max scaling 을 진행하는 것이다.
+</p>
+
+{% highlight python %}
+def preprocess(word_freq_df):
+    # Delete columns which have frequency > 5 for more than 90% of the rows
+    # Delete columns which have frequency > 5 for only one row
+    freq_sat = word_freq_df > 5
+    freq_sat_total = freq_sat.sum(axis=0)
+    selected = (freq_sat_total > 1) & (freq_sat_total < len(word_freq_df) * 0.9)
+    delete_list = []
+    for inx in selected.index:
+        if not selected[inx]:
+            delete_list.append(inx)
+    word_freq_df = word_freq_df.drop(delete_list, axis=1)
+
+    # Perform min-max scaling on the dataframe
+    min_max_scaler = MinMaxScaler()
+    transformed = min_max_scaler.fit_transform(word_freq_df)
+    word_freq_df = pd.DataFrame(transformed, columns=word_freq_df.columns, index=list(word_freq_df.index.values))
+
+    return word_freq_df
+{% endhighlight %}
+
+<p>
+	이제 전처리된 행렬에 대해 2차원 공간으로의 t-SNE 를 진행한다. Similarity 산정 기준은 결과가 더 안정적으로 나오는 cosine similarity 이다. t-SNE 에 대해서는 추후에 포스팅하도록 하겠다.
+</p>
+
+{% highlight python %}
+def tsne(word_freq_df, p, m='cosine'):
+    # Perform t-SNE with perplexity p
+    z = TSNE(
+        n_components=2,
+        perplexity=p,
+        metric=m
+    ).fit_transform(word_freq_df)
+    embedding_df = pd.DataFrame(data=z, columns=['t-SNE 1', 't-SNE 2'])
+    return embedding_df
+{% endhighlight %}
+
+<p>
+	새로운 PDF 파일이 디렉토리에 추가되었을 때, 알고리즘이 비결정적(non-deterministic)이므로 t-SNE 를 다시 수행하는 것은 임베딩이 크게 바뀔 수도 있으므로 사용자 입장에서 비합리적이다.
+	따라서 새로운 PDF 와 존재하는 PDF 의 cosine similarity 를 계산하고, 백분위 90% 를 넘는 논문들의 평균으로 새로운 논문 PDF 의 위치를 정한다.
+</p>
+
+{% highlight python %}
+	# Compute cosine similarities to the last row
+    cos_sim = cosine_similarity(frequency_matrix[:-1], frequency_matrix[-1].reshape(1, -1))
+    func_cos_sim = over_quantile(cos_sim.reshape(1, -1), 0.9)
+    nn_emb['t-SNE 1'] = np.sum(original_embedding['t-SNE 1'].tolist() * func_cos_sim) / np.sum(func_cos_sim)
+    nn_emb['t-SNE 2'] = np.sum(original_embedding['t-SNE 2'].tolist() * func_cos_sim) / np.sum(func_cos_sim)
+{% endhighlight %}
+
+<h2>Paper Cloud Windows Application 구현</h2>
+
+<h3>GUI</h3>
+
+<p>
+	위와 같이 주요 기능들에 대한 함수를 Python 으로 구현하고 난 뒤, cross-platform GUI tookit 인 Qt 를 Python 에서 사용할 수 있게 해주는 PyQt5 을 이용해 GUI 를 구현했다.
+	사용자에게 보여지는 메인 화면은 다음과 같다. Cermine 라이브러리를 이용해 제목, 작가 그리고 초록을 PDF 에서 뽑아내는 기능이 있다.
+	또, 임베딩이 마음에 들지 않는다면 다른 perplexity 로 다시 임베딩(t-SNE)을 해볼 수 있는 인터페이스와 현재 작업을 저장할 수 있는 인터페이스도 구현했다.
+	화면에 보여지는 논문 PDF 는 임의로 추가했다. 예상과 크게 다르지 않게, GNN (Graph Convolutional Network) 관련 논문들이 서로 가까운 위치에,
+	NTM , NTM 구현, DNC 논문이 서로 가까운 위치에, Universal Approximation Theorem 관련 논문들이
+	서로 가까운 위치에 임베딩 된 것을 볼 수 있었다.
+</p>
+
+<a href="/assets/images/{{page.id}}/mainwindow.png"> <img
+	class="center-block img-responsive"
+	src="/assets/images/{{page.id}}/mainwindow.png" alt="Main window"/></a>
+<p align="center">메인 화면. PDF 파일들이 적절하게 배치(임베딩)된 것을 볼 수 있다.</p>
+
+<p>
+	원이나 텍스트를 더블클릭하면, PDF 파일이 연결된 프로그램으로 실행된다.
+	또, 편의를 위해 각 논문들의 임베딩 결과를 사용자가 적절하게 조정할 수 있게 배치가 나타나는 화면을 QGraphicsView 클래스를 상속하여 만들고 다중 선택, 범위 선택 및 이동 등이 가능하게 했다.
+</p>
+
+<a href="/assets/images/{{page.id}}/rubberband.png"> <img
+	class="center-block img-responsive"
+	src="/assets/images/{{page.id}}/rubberband.png" alt="Rubberband selection"/></a>
+<p align="center">범위 선택 모습.</p>
+
+<a href="/assets/images/{{page.id}}/multiselect.png"> <img
+	class="center-block img-responsive"
+	src="/assets/images/{{page.id}}/multiselect.png" alt="Multiple selection"/></a>
+<p align="center">다중 선택 모습.</p>
+
+<h3>속도 향상</h3>
+
+<p>
+	매번 새롭게 추출 및 토큰화를 하는 것은 상당히 비효율적이므로, 프로그램을 시작하고 종료할 때 CSV 파일에 좌표, 메타 정보, 단어 빈도 등의 정보를 읽고 쓴다.
+	또, 파일 추가나 제거가 이루어질 수 있기 때문에 새로운 파일이나 지워진 파일의 정보를 적절히(위에 언급한대로) 추가하거나 지워준다.
+</p>
+
+	
+<h2>결론 및 느낀점</h2>
+
+<p>
+	논문을 읽으면서 공부를 하다가 불편한 점을 개선하기 위한 개발이었다.
+	파이썬으로 GUI 개발을 한 것은 처음이고 시행착오도 많았지만, 깔끔하고 실효성 있게 잘 만든 것 같다.
+	앞으로는 여러 논문을 탐색해가면서 공부를 하기가 좀 더 쉬워질 것 같다.
+</p>
