@@ -215,7 +215,7 @@ def tsne(word_freq_df, p, m='cosine'):
 	서로 가까운 위치에 임베딩 된 것을 볼 수 있었다.
 </p>
 
-<a href="/assets/images/{{page.id}}/mainwindow.png"> <img
+<a href="/assets/images/{{page.id}}/mainwindow.png"> <img width="250" height="180"
 	class="center-block img-responsive"
 	src="/assets/images/{{page.id}}/mainwindow.png" alt="Main window"/></a>
 <p align="center">메인 화면. PDF 파일들이 적절하게 배치(임베딩)된 것을 볼 수 있다.</p>
@@ -225,12 +225,12 @@ def tsne(word_freq_df, p, m='cosine'):
 	또, 편의를 위해 각 논문들의 임베딩 결과를 사용자가 적절하게 조정할 수 있게 배치가 나타나는 화면을 QGraphicsView 클래스를 상속하여 만들고 다중 선택, 범위 선택 및 이동 등이 가능하게 했다.
 </p>
 
-<a href="/assets/images/{{page.id}}/rubberband.png"> <img
+<a href="/assets/images/{{page.id}}/rubberband.png"> <img width="250" height="180"
 	class="center-block img-responsive"
 	src="/assets/images/{{page.id}}/rubberband.png" alt="Rubberband selection"/></a>
 <p align="center">범위 선택 모습.</p>
 
-<a href="/assets/images/{{page.id}}/multiselect.png"> <img
+<a href="/assets/images/{{page.id}}/multiselect.png"> <img width="250" height="180"
 	class="center-block img-responsive"
 	src="/assets/images/{{page.id}}/multiselect.png" alt="Multiple selection"/></a>
 <p align="center">다중 선택 모습.</p>
@@ -247,6 +247,8 @@ def tsne(word_freq_df, p, m='cosine'):
 
 <p>
 	논문을 읽으면서 공부를 하다가 불편한 점을 개선하기 위한 개발이었다.
+	추출 관련해서는 아쉬운 부분이 많이 있다. 우선 Cermine 라이브러리를 이용한 메타 데이터 추출의 정확도가 높지만, 속도가 생각보다 많이 느렸다.
+	또, 메타 데이터와 그냥 텍스트를 추출하는 매커니즘이 분리돼 있는 것도 아쉬웠다. 자체적인 추출 방식을 개발해 이 둘을 동시에 처리하면 좋을 것 같다.
 	파이썬으로 GUI 개발을 한 것은 처음이고 시행착오도 많았지만, 깔끔하고 실효성 있게 잘 만든 것 같다.
-	앞으로는 여러 논문을 탐색해가면서 공부를 하기가 좀 더 쉬워질 것 같다.
+	앞으로는 여러 논문을 탐색해가면서 공부를 하기가 좀 더 수월해질 것 같다. 완성도를 키워서 다른 연구자들도 이용할 수 있게 만들고 싶다.
 </p>
